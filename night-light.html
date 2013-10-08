@@ -50,6 +50,7 @@ var yScale = d3.scale.linear()
 var rScale = d3.scale.linear()
                     .domain([0,yMax])
                     .range([25, 5]);
+                    // .range([5, 25]);
 
 svg.selectAll("circle")
     .data(dataset)
@@ -85,7 +86,7 @@ svg.selectAll("circle")
 
       svg.selectAll("circle")
          .transition()
-         .duration(5000)
+         .duration(3000)
          .ease("linear")
       
           .attr("cx",function(d) {
@@ -104,14 +105,8 @@ svg.selectAll("circle")
           .attr("fill", function(d) {
             return "rgb(" + 255*Math.random() + "," + 255*Math.random() + "," + 255*Math.random() + ")";
           });
-      console.log(i);
 
-    }, 5000)
-
-      if ( i > 50) {
-
-        clearInterval(time1);
-      }
+    }, 3000)
 
 </script>
 </body>
