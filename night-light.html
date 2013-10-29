@@ -2,8 +2,14 @@
 <meta charset="utf-8">
 <head>
   <title>D3-night-light</title>
+  <style>
+  
+  </style>
 </head>
 <body>
+
+<audio src="http://www.kuwo.cn/yinyue/219764/"></audio>
+
 <script src="lib/d3.v3.min.js"></script>
 <style>
   body {
@@ -86,7 +92,7 @@ svg.selectAll("circle")
 
       svg.selectAll("circle")
          .transition()
-         .duration(3000)
+         .duration(6000)
          .ease("linear")
       
           .attr("cx",function(d) {
@@ -105,8 +111,7 @@ svg.selectAll("circle")
           .attr("fill", function(d) {
             return "rgb(" + 255*Math.random() + "," + 255*Math.random() + "," + 255*Math.random() + ")";
           });
-
-    }, 3000)
+    }, 6000)
 
 </script>
 </body>
