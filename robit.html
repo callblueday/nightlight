@@ -6,38 +6,19 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: auto;
   position: relative;
+  z-index: -2;
   width: 960px;
 }
-
-form {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
-
-svg {
-  border: 1px solid #999;
-}
-
-.qpoints-area {
-  border: 1px solid #999;
-  stroke: #000;
-  stroke-width: 2;
-}
 </style>
-<form>
-  <label><input type="radio" name="mode" value="size"> Size</label>
-  <label><input type="radio" name="mode" value="count" checked> Count</label>
-</form>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<body>
+<script src="lib/d3.v3.min.js"></script>
 <script>
 
 var width = 960,
-    height = 700,
-    radius = Math.min(width, height) / 2,
-    color = d3.scale.category20c();
+    height = 500,
+    radius = Math.min(width, height) / 2;
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("body").append("svg") 
                            .attr("width", width)
                            .attr("height", height);
 
@@ -67,25 +48,46 @@ var arc2 = d3.svg.arc()
     .innerRadius(89)
     .outerRadius(90);
 
+var currentLength = 0;
+
 var orbit = center.append("path") 
        .attr("d", arc2)
        .style("stroke", function() {
-          console.log(this.getPointAtLength())
           return "rgba(0, 136, 183, 1)";
        })
        .style("fill-rule", "evenodd")
 
 var ball = center.append("circle")
                  .attr({
-                   cx: function() {
-                     return -89;
-                   },
-                   cy: function() {
-                     return 0;
-                   },
                    r: 8,
                    fill: function() {
                      return "rgba(0, 102, 137, 1)";
                    }
                  })
+
+d3.select(document).on("click", function(){
+})
+
+transition();
+
+function transition() {
+  ball.transition()
+      .ease("linear")
+      .duration(5000)
+      .attrTween("transform", translateAlong(orbit.node()))
+      .each("end", transition);
+}
+
+// Returns an attrTween for translating along the specified path element.
+function translateAlong(path) {
+  var l = path.getTotalLength();
+  return function(d, i, a) {
+    return function(t) {
+      var p = path.getPointAtLength(t * l);
+      return "translate(" + p.x + "," + p.y + ")";
+    };
+  };
+}
+
 </script>
+</body>
